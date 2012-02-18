@@ -103,7 +103,7 @@ class SFRGBLEDMatrix {
     void show(); 
     // 4 pixels height font
     void printChar4p(char c, Color color, int x, int y);
-    void printString4p(char *s, Color color, int x, int y);
+    void printString4p(const char *s, Color color, int x, int y);
     // paint single pixel
     void paintPixel(Color color, int x, int y);
     Color getPixel(int x, int y);

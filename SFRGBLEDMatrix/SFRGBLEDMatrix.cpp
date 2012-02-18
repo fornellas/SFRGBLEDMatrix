@@ -97,8 +97,7 @@ void SFRGBLEDMatrix::printChar4p(char c, Color color, int x_offset, int y_offset
   }
 }
 
-void SFRGBLEDMatrix::printString4p(char *s, Color color, int x, int y){
-  uint16_t incr;
+void SFRGBLEDMatrix::printString4p(const char *s, Color color, int x, int y){
   for(uint16_t p=0;s[p]!='\0';p++){
     char c;
     c=s[p];
