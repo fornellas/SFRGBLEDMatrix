@@ -75,11 +75,11 @@ void SFRGBLEDMatrix::show() {
 
 #define X_MAX_4P (byte)(pgm_read_word_near(coffset_4p+c-CHAR_MIN_4P+1)-(byte)pgm_read_word_near(coffset_4p+c-CHAR_MIN_4P))
 
-void SFRGBLEDMatrix::printChar4p(char c, Color color, int x_offset, int y_offset){
+void SFRGBLEDMatrix::printChar4p(char c, Color color, int xOffset, int yOffset){
   if(c<CHAR_MIN_4P||c>CHAR_MAX_4P)
     return;
   for(int y=0;y<4;y++){
-    if(y+y>=height)
+    if(y+yOffset>=height)
       continue;
     uint8_t x_max=X_MAX_4P;
     for(int x=0;x<x_max;x++){
@@ -92,7 +92,7 @@ void SFRGBLEDMatrix::printChar4p(char c, Color color, int x_offset, int y_offset
       charData=(byte)pgm_read_word_near((byte *)pgm_read_word_near(&line_4p[y])+bitOffset/8);
       pixel=(charData>>(7-bitOffset%8)) & B00000001;
       if(pixel)
-        paintPixel(color, x+x_offset, y+y_offset);
+        paintPixel(color, x+xOffset, y+yOffset);
     }
   }
 }
