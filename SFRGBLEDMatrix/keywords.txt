@@ -18,8 +18,12 @@ width		KEYWORD2
 height		KEYWORD2
 pixels		KEYWORD2
 frameBuff	KEYWORD2
+SFRGBLEDMatrix	KEYWORD2
 show		KEYWORD2
 config		KEYWORD2
+printChar4p	KEYWORD2
+paintPixel	KEYWORD2
+fill		KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
