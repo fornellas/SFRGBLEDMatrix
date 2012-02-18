@@ -1,7 +1,7 @@
 Sparkfun RGB LED Matrix Arduino interface library
 =================================================
 
-WARNING: This library is no longer maintained by the author!
+WARNING: This library is no longer maintained by the author! There is a new firmware available, that allows you to use 4096 colors, not only 255, as limited by Sparkfun's firmware. It is recommended for you to upgrade your firmware. Please check out https://github.com/fornellas/SFRGBLEDMatrix for the new firmware and updated Arduino library.
 
 This library makes it easier for Arduino 1.0 to interface with this product:
 http://www.sparkfun.com/products/760
