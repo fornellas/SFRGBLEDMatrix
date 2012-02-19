@@ -13,18 +13,14 @@ Color		KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
-square		KEYWORD2
-dispCount	KEYWORD2
 width		KEYWORD2
 height		KEYWORD2
 pixels		KEYWORD2
 setupSPI	KEYWORD2
 setupPINs	KEYWORD2
 show		KEYWORD2
-printChar4p	KEYWORD2
-printString4p	KEYWORD2
+print		KEYWORD2
 paintPixel	KEYWORD2
-getPixel	KEYWORD2
 fill		KEYWORD2
 clear		KEYWORD2
 
@@ -32,9 +28,6 @@ clear		KEYWORD2
 # Constants (LITERAL1)
 #######################################
 
-SQUARE		LITERAL1
-SIDE		LITERAL1
-DISP_LEN	LITERAL1
 BITS_PER_COLOR	LITERAL1
 MAX_C		LITERAL1
 MID_C		LITERAL1
@@ -56,6 +49,7 @@ BLUE_MAGENTA	LITERAL1
 CYAN		LITERAL1
 MAGENTA		LITERAL1
 YELLOW		LITERAL1
-
+MAGENTA		LITERAL1
+ORANGE		LITERAL1
 
 
