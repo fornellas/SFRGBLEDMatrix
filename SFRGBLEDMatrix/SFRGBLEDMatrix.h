@@ -46,11 +46,12 @@ typedef uint16_t Color;
 
 // Generate a Color, given RGB values
 #define RGB(r,g,b) (((r)<<(BITS_PER_COLOR*2))|((g)<<BITS_PER_COLOR)|(b))
+#define RGB_GAMMA(r,g,b) (((pgm_read_byte(&gamma25[r]))<<(BITS_PER_COLOR*2))|((pgm_read_byte(&gamma25[g]))<<BITS_PER_COLOR)|(pgm_read_byte(&gamma25[b])))
 
 // Extract color component from Color
-#define GET_RED(c) ((c&(0x0F<<(BITS_PER_COLOR*2)))>>(BITS_PER_COLOR*2))
-#define GET_GREEN(c) ((c&(0x0F<<BITS_PER_COLOR))>>BITS_PER_COLOR)
-#define GET_BLUE(c) (c&0x0F)
+#define GET_RED(c) (((c)&(0x0F<<(BITS_PER_COLOR*2)))>>(BITS_PER_COLOR*2))
+#define GET_GREEN(c) (((c)&(0x0F<<BITS_PER_COLOR))>>BITS_PER_COLOR)
+#define GET_BLUE(c) ((c)&0x0F)
 
 // Some colors
 #define	BLACK		RGB(0,	  0,    0    )
@@ -94,6 +95,8 @@ class SFRGBLEDMatrix {
     // Coordinate adjustments for paintPixel()
     int recAdjStart;
     int recAdjIncr;
+    // Gamma
+    boolean useGamma;
   public:
     // Useful variables
     uint8_t width;
@@ -117,6 +120,8 @@ class SFRGBLEDMatrix {
     void fill(const Color color);
     // same as fill(BLACK)
     void clear();
+    // Enable / disable gamma correction
+    void gamma(boolean state);
 };
 
 #endif

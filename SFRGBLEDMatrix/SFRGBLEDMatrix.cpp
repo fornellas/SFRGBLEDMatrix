@@ -30,6 +30,9 @@ prog_uchar line3_4p[] PROGMEM={
 prog_uchar *line_4p[] PROGMEM={
   line0_4p, line1_4p, line2_4p, line3_4p};
 
+// 2.5 Gamma correction
+static unsigned char gamma25[] PROGMEM = {0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 7, 9, 10, 13, 15};
+
 //
 // Functions
 //
@@ -40,6 +43,7 @@ SFRGBLEDMatrix::SFRGBLEDMatrix(const uint8_t pinSS, const uint8_t numDispHoriz, 
   this->height=DISP_LEN*numDispVert;
   this->recAdjStart=int((( ((height>>3)-1) * (width>>3) )<<3));
   this->recAdjIncr=((width>>3)+1)<<3;
+  this->useGamma=false;
   this->pinSS=pinSS;
   frameBuffSize=DISPLAY_BUFFER_SIZE*dispCount;
   frameBuff=(byte *)calloc((size_t)(frameBuffSize), sizeof(byte)); // FIXME validate if NULL
@@ -112,8 +116,12 @@ void SFRGBLEDMatrix::paintPixel(Color color, int x, int y) {
   uint16_t startPixel;
   uint16_t startByte;
   // Out of boundaries
-  if(x>=width||y>=height)
+  if(x>=width||y>=height||y<0||y<0)
     return;
+  // Gamma
+  if(useGamma){
+    color=RGB_GAMMA(GET_RED(color), GET_GREEN(color), GET_BLUE(color));
+  }
   // Adjust coordinates, can be disabled for single row of matrices
   x+=recAdjStart - int(y>>3)*recAdjIncr;
   // print pixel
@@ -142,4 +150,8 @@ void SFRGBLEDMatrix::fill(Color color){
 
 void SFRGBLEDMatrix::clear(){
   fill(BLACK);
+}
+
+void SFRGBLEDMatrix::gamma(boolean state){
+  useGamma=state;
 }
