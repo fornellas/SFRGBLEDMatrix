@@ -1,0 +1,6 @@
+Font generation utilities.
+
+gen-base.sh
+  Create a base layout (all blanks).
+convert2c.sh
+  Convert layout fontXp to C code.
