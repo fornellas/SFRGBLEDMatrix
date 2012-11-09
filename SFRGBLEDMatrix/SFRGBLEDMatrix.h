@@ -43,6 +43,7 @@ typedef uint16_t Color;
 #define BITS_PER_COLOR 4
 #define MAX_C 15
 #define MID_C 7
+#define DISP_LEN byte(8)
 
 // Generate a Color, given RGB values
 #define RGB(r,g,b) (((r)<<(BITS_PER_COLOR*2))|((g)<<BITS_PER_COLOR)|(b))
@@ -111,15 +112,18 @@ class SFRGBLEDMatrix {
     void setupPINs(); 
     // Send buffer to the screens
     void show(); 
-    // Character drawing. Only size=4 implemented for now
+    // Character drawing. Only size=4 or size=5 implemented for now
     void print(const Color color, const int x, const int y, const uint8_t size, const char c);
     void print(const Color color, const int x, const int y, const uint8_t size, const char *s);
+    void print_PF(const Color color, const int x, const int y, const uint8_t size, PGM_P s);
     // paint single pixel
     void paintPixel(const Color color, const int x, const int y);
     // fill screen with one color
     void fill(const Color color);
     // same as fill(BLACK)
     void clear();
+    // draw line
+    void line(const Color color, const int x1, const int y1, const int x2, const int y2);
     // Enable / disable gamma correction
     void gamma(boolean state);
 };

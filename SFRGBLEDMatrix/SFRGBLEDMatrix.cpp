@@ -7,12 +7,13 @@ extern "C" {
 #include <Arduino.h>
 #include <SFRGBLEDMatrix.h>
 #include <SPI.h>
-#include <fonts.h>
+#include <SFRGBLEDMatrixFonts.h>
 
 // Display properties
 #define DISPLAY_PIXELS 64
 #define DISPLAY_BUFFER_SIZE (DISPLAY_PIXELS*BITS_PER_COLOR*3>>3)
-#define DISP_LEN byte(8)
+
+#define swap(a, b) { int16_t t = a; a = b; b = t; }
 
 // Font
 
@@ -118,7 +119,28 @@ void SFRGBLEDMatrix::print(const Color color, int x, int y, const uint8_t size, 
   for(uint16_t p=0;s[p]!='\0';p++){
     char c;
     c=s[p];
-    print(color, x, y, size, s[p]);
+    print(color, x, y, size, c);
+    x+=X_MAX+1;
+  }
+}
+
+void SFRGBLEDMatrix::print_PF(const Color color, int x, int y, const uint8_t size, PGM_P s){
+  prog_uint16_t *coffset;
+  char c;
+
+  switch(size){
+    case 4:
+       coffset=coffset_4p;
+       break;
+    case 5:
+       coffset=coffset_5p;
+       break;
+    default:
+       return;
+  }  
+  for(uint16_t p=0;c!=0;p++){
+    c=pgm_read_byte(s+p);
+    print(color, x, y, size, c);
     x+=X_MAX+1;
   }
 }
@@ -137,7 +159,7 @@ void SFRGBLEDMatrix::paintPixel(Color color, int x, int y) {
   x+=recAdjStart - int(y>>3)*recAdjIncr;
   // print pixel
   startPixel=(dispCount-1-(x>>3))*DISPLAY_PIXELS + ((7-y)<<3) + (x&7);
-  startByte=startPixel*12/8;
+  startByte=(startPixel*12)>>3;
   // odd pixels
   if(startPixel&0x01) {
     // XXXX RRRR
@@ -161,6 +183,48 @@ void SFRGBLEDMatrix::fill(Color color){
 
 void SFRGBLEDMatrix::clear(){
   fill(BLACK);
+}
+
+void SFRGBLEDMatrix::line(const Color color, int x0, int y0, int x1, int y1){
+  // http://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+  // https://github.com/adafruit/Adafruit-GFX-Library/blob/master/Adafruit_GFX.cpp
+  int16_t steep = abs(y1 - y0) > abs(x1 - x0);
+
+
+  if(steep){
+    swap(x0, y0);
+    swap(x1, y1);
+  }
+  if(x0>x1){
+    swap(x0, x1);
+    swap(y0, y1);
+  }
+
+  int16_t dx, dy;
+  dx = x1 - x0;
+  dy = abs(y1 - y0);
+
+  int16_t err = dx / 2;
+  int16_t ystep;
+
+  if (y0 < y1) {
+    ystep = 1;
+  } else {
+    ystep = -1;
+  }
+
+  for (; x0<=x1; x0++) {
+    if (steep) {
+      paintPixel(color, y0, x0);
+    } else {
+      paintPixel(color, x0, y0);
+    }
+    err -= dy;
+    if (err < 0) {
+      y0 += ystep;
+      err += dx;
+    }
+  }
 }
 
 void SFRGBLEDMatrix::gamma(boolean state){
