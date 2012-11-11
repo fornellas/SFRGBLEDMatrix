@@ -15,11 +15,6 @@ extern "C" {
 
 #define swap(a, b) { int16_t t = a; a = b; b = t; }
 
-// Font
-
-// 2.5 Gamma correction
-static unsigned char gamma25[] PROGMEM = {0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 7, 9, 10, 13, 15};
-
 //
 // Functions
 //
@@ -225,6 +220,13 @@ void SFRGBLEDMatrix::line(const Color color, int x0, int y0, int x1, int y1){
       err += dx;
     }
   }
+}
+
+void SFRGBLEDMatrix::box(const Color color, int x0, int y0, int x1, int y1){
+  line(color, x0, y0, x1, y0);
+  line(color, x1, y0, x1, y1);
+  line(color, x0, y1, x1, y1);
+  line(color, x0, y1, x0, y0);
 }
 
 void SFRGBLEDMatrix::gamma(boolean state){

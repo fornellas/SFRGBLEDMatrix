@@ -23,8 +23,10 @@ print		KEYWORD2
 print_PF	KEYWORD2
 paintPixel	KEYWORD2
 fill		KEYWORD2
-line		KEYWORD2
 clear		KEYWORD2
+line		KEYWORD2
+box			KEYWORD2
+gamma		KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

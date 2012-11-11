@@ -47,7 +47,12 @@ typedef uint16_t Color;
 
 // Generate a Color, given RGB values
 #define RGB(r,g,b) (((r)<<(BITS_PER_COLOR*2))|((g)<<BITS_PER_COLOR)|(b))
+
+// Gamma correction
+// 2.5 Gamma correction
+static unsigned char gamma25[] PROGMEM = {0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 7, 9, 10, 13, 15};
 #define RGB_GAMMA(r,g,b) (((pgm_read_byte(&gamma25[r]))<<(BITS_PER_COLOR*2))|((pgm_read_byte(&gamma25[g]))<<BITS_PER_COLOR)|(pgm_read_byte(&gamma25[b])))
+#define V_GAMMA(v) pgm_read_byte(&gamma25[v])
 
 // Extract color component from Color
 #define GET_RED(c) (((c)&(0x0F<<(BITS_PER_COLOR*2)))>>(BITS_PER_COLOR*2))
@@ -123,7 +128,9 @@ class SFRGBLEDMatrix {
     // same as fill(BLACK)
     void clear();
     // draw line
-    void line(const Color color, const int x1, const int y1, const int x2, const int y2);
+    void line(const Color color, const int x0, const int y0, const int x1, const int y1);
+    // draw box
+    void box(const Color color, const int x0, const int y0, const int x1, const int y1);
     // Enable / disable gamma correction
     void gamma(boolean state);
 };
