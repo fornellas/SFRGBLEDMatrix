@@ -133,6 +133,9 @@ class SFRGBLEDMatrix {
     void box(const Color color, const int x0, const int y0, const int x1, const int y1);
     // Enable / disable gamma correction
     void gamma(boolean state);
+    //
+    uint8_t spectrumLen();
+    Color spectrum(uint16_t value, uint16_t max);
 };
 
 #endif

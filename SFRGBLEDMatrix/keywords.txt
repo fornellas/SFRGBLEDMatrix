@@ -27,6 +27,8 @@ clear		KEYWORD2
 line		KEYWORD2
 box			KEYWORD2
 gamma		KEYWORD2
+spectrumLen	KEYWORD2
+spectrum	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

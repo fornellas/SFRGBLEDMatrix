@@ -15,6 +15,8 @@ extern "C" {
 
 #define swap(a, b) { int16_t t = a; a = b; b = t; }
 
+#define SPECTRUM_LEN 90
+
 //
 // Functions
 //
@@ -231,4 +233,45 @@ void SFRGBLEDMatrix::box(const Color color, int x0, int y0, int x1, int y1){
 
 void SFRGBLEDMatrix::gamma(boolean state){
   useGamma=state;
+}
+
+uint8_t SFRGBLEDMatrix::spectrumLen(){
+  return SPECTRUM_LEN;
+}
+
+Color SFRGBLEDMatrix::spectrum(uint16_t value, uint16_t max){
+  uint8_t p;
+
+  p=round((double)value/(double)max*(double)(SPECTRUM_LEN-1));
+
+  // RED
+  if(p<15){
+    return RGB(15, p+1, 0);
+  }
+  // YELLOW
+  if(p<30){
+    p-=15;
+    return RGB(14-p, 15, 0);
+  }
+  // GREEN
+  if(p<45){
+    p-=30;
+    return RGB(0, 15, p+1);
+  }
+  // CYAN
+  if(p<60){
+    p-=45;
+    return RGB(0, 14-p, 15);
+  }
+  // BLUE
+  if(p<75){
+    p-=60;
+    return RGB(p+1, 0, 15);
+  }
+  // MAGENTA
+  if(p<90){
+    p-=75;
+    return RGB(15, 0, 14-p);
+  }
+  return 0;
 }
