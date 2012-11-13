@@ -32,6 +32,7 @@ spectrum			KEYWORD2
 progressBarInit		KEYWORD2
 progressBarUpdate	KEYWORD2
 CRT					KEYWORD2
+getPixel			KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

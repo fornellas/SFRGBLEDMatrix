@@ -141,6 +141,8 @@ class SFRGBLEDMatrix {
     void progressBarUpdate(Color barColor, uint16_t vaule, uint16_t max);
     // CRT out animation
     void CRT(Color bgColor, Color borderColor);
+   // Get current pixel color from buffer
+   Color getPixel(int x, int y);
 };
 
 #endif

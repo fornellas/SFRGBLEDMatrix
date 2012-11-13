@@ -13,7 +13,7 @@ extern "C" {
 #define DISPLAY_PIXELS 64
 #define DISPLAY_BUFFER_SIZE (DISPLAY_PIXELS*BITS_PER_COLOR*3>>3)
 
-#define swap(a, b) { int16_t t = a; a = b; b = t; }
+#define SWAP(a, b) { int16_t t = a; a = b; b = t; }
 
 #define SPECTRUM_LEN 90
 
@@ -189,12 +189,12 @@ void SFRGBLEDMatrix::line(const Color color, int x0, int y0, int x1, int y1){
 
 
   if(steep){
-    swap(x0, y0);
-    swap(x1, y1);
+    SWAP(x0, y0);
+    SWAP(x1, y1);
   }
   if(x0>x1){
-    swap(x0, x1);
-    swap(y0, y1);
+    SWAP(x0, x1);
+    SWAP(y0, y1);
   }
 
   int16_t dx, dy;
@@ -303,4 +303,32 @@ void SFRGBLEDMatrix::CRT(Color bgColor, Color borderColor){
     box(bgColor, width/2-2, p, width/2+1, height-p-1);
     show();
   }
+}
+
+Color SFRGBLEDMatrix::getPixel(int x, int y){
+  uint16_t startPixel;
+  uint16_t startByte;
+  Color color=BLACK;
+  // Out of boundaries
+  if(x>=width||y>=height||y<0||y<0)
+    return BLACK;
+  // Adjust coordinates, can be disabled for single row of matrices
+  x+=recAdjStart - int(y>>3)*recAdjIncr;
+  // print pixel
+  startPixel=(dispCount-1-(x>>3))*DISPLAY_PIXELS + ((7-y)<<3) + (x&7);
+  startByte=(startPixel*12)>>3;
+  // odd pixels
+  if(startPixel&0x01) {
+    // XXXX RRRR
+    color=(frameBuff[startByte]&0x0F)<<8;
+    // GGGG BBBB
+    color=color|frameBuff[startByte+1];
+  // even pixels
+  }else{
+    // RRRR GGGG
+    color=frameBuff[startByte]<<4;
+    // BBBB XXXX
+    color=color|(frameBuff[startByte+1]>>4);
+  }
+  return color;
 }
