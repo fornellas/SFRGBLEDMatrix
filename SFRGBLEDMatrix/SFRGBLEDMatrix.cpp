@@ -275,3 +275,32 @@ Color SFRGBLEDMatrix::spectrum(uint16_t value, uint16_t max){
   }
   return 0;
 }
+
+void SFRGBLEDMatrix::progressBarInit(Color borderColor){
+  clear();
+  box(borderColor, 0, height/2-2, width-1, height/2+1);
+  show();
+}
+
+void SFRGBLEDMatrix::progressBarUpdate(Color barColor, uint16_t vaule, uint16_t max){
+  box(barColor, 1, height/2-1, round((double)vaule*((double)width-2.0)/(double)max), height/2);
+  show();
+}
+
+void SFRGBLEDMatrix::CRT(Color bgColor, Color borderColor){
+  for(byte p=0;p<height/2-1;p++){
+    if(p)
+      box(bgColor, p-1, p-1, width-1-p+1, height-1-p+1);
+    box(borderColor, p, p, width-1-p, height-1-p);
+    show();
+  }  
+  for(byte p=height/2-1;p<width/2;p++){
+    box(bgColor, p-1, height/2-2-1, width-1-p+1, height/2+1+1);
+    box(borderColor, p, height/2-2, width-1-p, height/2+1);
+    show();
+  }
+  for(byte p=height/2-2;p<height/2;p++){
+    box(bgColor, width/2-2, p, width/2+1, height-p-1);
+    show();
+  }
+}
