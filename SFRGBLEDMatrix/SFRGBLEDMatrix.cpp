@@ -273,7 +273,7 @@ Color SFRGBLEDMatrix::spectrum(uint16_t value, uint16_t max){
     p-=75;
     return RGB(15, 0, 14-p);
   }
-  return 0;
+  return spectrum(value-max, max);
 }
 
 void SFRGBLEDMatrix::progressBarInit(Color borderColor){
