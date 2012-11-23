@@ -1,9 +1,1 @@
-Sparkfun's RGB LED Matrix code
-==============================
-
-Product page: http://www.sparkfun.com/products/760.
-
-RGB_Backpack_4096_Colors/
-	4096 colors capable alternative firmware.
-SFRGBLEDMatrix/
-	Arduino interface library for the new firmware.
+This is an Arduino interface library for interfacing with an alternative firmware https://github.com/fornellas/RGB_Backpack_4096_Colors for Sparkfun's serial interface RGB LED Matrix (http://www.sparkfun.com/products/760).
