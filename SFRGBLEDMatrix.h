@@ -2,6 +2,7 @@
 #define SFRGBLEDMatrix_h
 
 #include <Arduino.h>
+#include <inttypes.h>
 
 //
 // Proper wiring and coordinates
@@ -140,9 +141,9 @@ class SFRGBLEDMatrix {
     void progressBarInit(Color borderColor);
     void progressBarUpdate(Color barColor, uint16_t vaule, uint16_t max);
     // CRT out animation
-    void CRT(Color bgColor, Color borderColor);
-   // Get current pixel color from buffer
-   Color getPixel(int x, int y);
+    void CRT(Color bgColor);
+    // Get current pixel color from buffer
+    Color getPixel(int x, int y);
 };
 
 #endif

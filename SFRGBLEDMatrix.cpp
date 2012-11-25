@@ -287,16 +287,14 @@ void SFRGBLEDMatrix::progressBarUpdate(Color barColor, uint16_t vaule, uint16_t 
   show();
 }
 
-void SFRGBLEDMatrix::CRT(Color bgColor, Color borderColor){
+void SFRGBLEDMatrix::CRT(Color bgColor){
   for(byte p=0;p<height/2-1;p++){
     if(p)
       box(bgColor, p-1, p-1, width-1-p+1, height-1-p+1);
-    box(borderColor, p, p, width-1-p, height-1-p);
     show();
   }  
   for(byte p=height/2-1;p<width/2;p++){
     box(bgColor, p-1, height/2-2-1, width-1-p+1, height/2+1+1);
-    box(borderColor, p, height/2-2, width-1-p, height/2+1);
     show();
   }
   for(byte p=height/2-2;p<height/2;p++){
